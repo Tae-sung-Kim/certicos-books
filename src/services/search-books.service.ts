@@ -1,5 +1,5 @@
 import apiInstance from '@/api';
-import { SearchBookReq } from '@/types/serach.type';
+import { SearchBookReq } from '@/types/serach-books.type';
 import qs from 'qs';
 
 // 책 조회하기

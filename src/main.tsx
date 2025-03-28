@@ -5,8 +5,8 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './index.css';
 import Layout from './layouts';
-import SearchBook from './pages/search-book';
-import WishListBookPage from './pages/wish-list-book';
+import SearchBooksPage from './pages/search-books';
+import WishListBookPage from './pages/wish-list-books';
 
 const queryClient = new QueryClient();
 
@@ -16,7 +16,7 @@ createRoot(document.getElementById('root')!).render(
       <QueryClientProvider client={queryClient}>
         <Layout>
           <Routes>
-            <Route path="/" element={<SearchBook />} />
+            <Route path="/" element={<SearchBooksPage />} />
             <Route path="/wish-list" element={<WishListBookPage />} />
           </Routes>
         </Layout>

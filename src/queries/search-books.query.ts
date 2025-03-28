@@ -1,5 +1,5 @@
-import { searchBooks } from '@/services/search.service';
-import { SearchBookReq } from '@/types/serach.type';
+import { searchBooks } from '@/services/search-books.service';
+import { SearchBookReq } from '@/types/serach-books.type';
 import { useQuery } from '@tanstack/react-query';
 
 export function useSearchBooks({ query, sort, page, size }: SearchBookReq) {
