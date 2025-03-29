@@ -13,6 +13,7 @@ export function useSearchBooks({ query, sort, page, size }: SearchBookReq) {
   const { data = fullback } = useQuery({
     queryKey: ['search', query, sort, page, size],
     queryFn: () => searchBooks({ query, sort, page, size }),
+    enabled: !!query,
   });
 
   return data;
