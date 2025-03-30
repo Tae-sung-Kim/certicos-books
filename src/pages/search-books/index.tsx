@@ -1,22 +1,23 @@
-// import { useSearchBooks } from '@/queries/search.query';
-
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import SearchBooksComponent from './components/Search-books.component';
 import TotalCountBooksComponent from './components/TotalCount-books.component';
 import { useSearchBooks } from '@/queries/search-books.query';
+import BooksListComponent from './components/Books-list.component';
+import Paginations from '@/components/paginations';
 
 export default function SearchBookPage() {
   const [query, setQuery] = useState<string>('');
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const { documents } = useSearchBooks({ query: query });
+  const { documents, meta } = useSearchBooks({
+    query: query,
+    page: currentPage,
+  });
 
   const handleSearchData = (query: string) => {
     setQuery(query);
+    setCurrentPage(1);
   };
-
-  useEffect(() => {
-    console.log(documents);
-  }, [documents]);
 
   return (
     <div className="container">
@@ -25,9 +26,17 @@ export default function SearchBookPage() {
       {/* 조회 책 건수 */}
       <TotalCountBooksComponent
         title="도서 검색 결과 총"
-        count={documents?.length}
+        count={meta?.pageable_count ?? 0}
       />
       {/* 조회 책 목록 */}
+      <BooksListComponent bookList={documents} />
+      {meta && meta.pageable_count > 0 && (
+        <Paginations
+          totalCount={meta.pageable_count}
+          currentPage={currentPage}
+          onPage={(page) => setCurrentPage(page)}
+        />
+      )}
     </div>
   );
 }

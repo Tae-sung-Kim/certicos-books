@@ -3,9 +3,11 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 
 export default function SearchHistoryComponent({
   searchHistory,
+  onHistoryClick,
   onDeleteHistory,
 }: {
   searchHistory: string[];
+  onHistoryClick: (searchValue: string) => void;
   onDeleteHistory: (options?: { key?: string; value?: string }) => void;
 }) {
   return (
@@ -15,6 +17,7 @@ export default function SearchHistoryComponent({
           <li
             key={i}
             className="flex items-center justify-between px-4 py-2 hover:bg-gray-50"
+            onClick={() => onHistoryClick(d)}
           >
             <span className="text-sm">{d}</span>
             <RiDeleteBin6Line

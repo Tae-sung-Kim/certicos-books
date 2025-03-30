@@ -1,14 +1,24 @@
 import { searchBooks } from '@/services/search-books.service';
-import { SearchBookReq } from '@/types/serach-books.type';
+import { SearchBookReq, SearchBookRes } from '@/types/serach-books.type';
 import { useQuery } from '@tanstack/react-query';
 
 export function useSearchBooks({ query, sort, page, size }: SearchBookReq) {
-  const fullback: SearchBookReq = {
-    query,
-    sort,
-    page,
-    size,
+  const fullback: SearchBookRes = {
+    authors: [],
+    contents: '',
+    datetime: new Date(),
+    isbn: '',
+    price: 0,
+    publisher: '',
+    sale_price: 0,
+    status: '',
+    thumbnail: '',
+    title: '',
+    translators: [],
+    url: '',
   };
+
+  console.log('쿼리가 안 실리는데? ', query, page);
 
   const { data = fullback } = useQuery({
     queryKey: ['search', query, sort, page, size],

@@ -28,33 +28,42 @@ export default function SearchBooksComponent({
     setSearchTitle('');
   };
 
+  // 조회 함수
+
+  const handleSearchData = (searchTitle: string) => {
+    onSearchData(searchTitle);
+
+    // 중복 검색 기록 삭제
+    const updatedHistory = searchHistory.filter((item) => item !== searchTitle);
+
+    if (updatedHistory.length >= 8) {
+      updatedHistory.pop(); // 가장 오래된 기록 삭제
+      //특정 값 삭제
+      handleDeleteHistory({ value: searchTitle });
+    }
+
+    setSearchHistory([searchTitle, ...updatedHistory]);
+    setFocus(false);
+  };
+
   // 엔터 조회
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (!searchTitle) return;
 
     if (e.key === 'Enter') {
-      onSearchData(searchTitle);
-
-      // 중복 검색 기록 삭제
-      const updatedHistory = searchHistory.filter(
-        (item) => item !== searchTitle
-      );
-
-      if (updatedHistory.length >= 8) {
-        updatedHistory.pop(); // 가장 오래된 기록 삭제
-        //특정 값 삭제
-        handleDeleteHistory({ value: searchTitle });
-      }
-
-      setSearchHistory([searchTitle, ...updatedHistory]);
-      setFocus(false);
+      handleSearchData(searchTitle);
     }
   };
 
   // 포커스가 들어왔을때
   const handleFocus = () => {
-    console.log('handleFocus');
     setFocus(true);
+  };
+
+  const handleHistoryClick = (searchValue: string) => {
+    setSearchTitle(searchValue);
+    handleSearchData(searchValue);
+    setFocus(false);
   };
 
   useEffect(() => {
@@ -98,6 +107,7 @@ export default function SearchBooksComponent({
               <div className="absolute left-0 right-0 top-[100%] z-10 mt-1 bg-white shadow-lg rounded-lg">
                 <SearchHistoryComponent
                   searchHistory={searchHistory}
+                  onHistoryClick={handleHistoryClick}
                   onDeleteHistory={handleDeleteHistory}
                 />
               </div>
