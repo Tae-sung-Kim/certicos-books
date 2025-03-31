@@ -5,6 +5,11 @@ export default function BooksDetailComponent({
 }: {
   book: SearchBookRes;
 }) {
+  const decodeHtml = (text: string) => {
+    const doc = new DOMParser().parseFromString(text, 'text/html');
+    return doc.documentElement.textContent ?? '';
+  };
+
   return (
     <div className="p-4 border-t bg-gray-50">
       <div className="flex space-x-4">
@@ -14,7 +19,7 @@ export default function BooksDetailComponent({
           alt={book.title}
         />
         <div className="flex-1">
-          <p className="text-gray-700 mb-4">{book.contents}</p>
+          <p className="text-gray-700 mb-4">{decodeHtml(book.contents)}</p>
           <div className="space-y-2">
             <InfoItem
               label="출간일"

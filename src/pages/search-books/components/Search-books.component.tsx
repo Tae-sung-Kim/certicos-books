@@ -4,16 +4,20 @@ import useLocalStorage from '@/hooks/useLocalStorage';
 import { useEffect, useRef, useState } from 'react';
 import { FaSearch, FaTimes } from 'react-icons/fa';
 import SearchHistoryComponent from './Search-history.component';
+import DetailSearchBooksComponent from './Detail-search-books.component';
+import { SearchBookReq } from '@/types/serach-books.type';
 
 export default function SearchBooksComponent({
   onSearchData,
 }: {
-  onSearchData: (query: string) => void;
+  onSearchData: ({ query, sort, page, size }: SearchBookReq) => void;
 }) {
-  const [searchHistory, setSearchHistory, handleDeleteHistory] =
-    useLocalStorage<string[]>('searchHistory', []);
+  const [searchHistory, setSearchHistory, onDeleteHistory] = useLocalStorage<
+    string[]
+  >('searchHistory', []);
   const [searchTitle, setSearchTitle] = useState<string>('');
   const [focus, setFocus] = useState<boolean>(false);
+  const [showDetailSearch, setShowDetailSearch] = useState<boolean>(false);
 
   const historyRef = useRef<HTMLDivElement>(null);
 
@@ -28,9 +32,9 @@ export default function SearchBooksComponent({
     setSearchTitle('');
   };
 
-  // 조회 함수
-  const handleSearchData = (searchTitle: string) => {
-    onSearchData(searchTitle);
+  // 조회 함수 - 전체 조회
+  const handleSearchData = ({ query, sort, page, size }: SearchBookReq) => {
+    onSearchData({ query, sort, page, size });
 
     // 중복 검색 기록 삭제
     const updatedHistory = searchHistory.filter((item) => item !== searchTitle);
@@ -38,9 +42,10 @@ export default function SearchBooksComponent({
     if (updatedHistory.length >= 8) {
       updatedHistory.pop(); // 가장 오래된 기록 삭제
       //특정 값 삭제
-      handleDeleteHistory({ value: searchTitle });
+      onDeleteHistory({ value: searchTitle });
     }
 
+    console.log(searchTitle);
     setSearchHistory([searchTitle, ...updatedHistory]);
     setFocus(false);
   };
@@ -50,7 +55,9 @@ export default function SearchBooksComponent({
     if (!searchTitle) return;
 
     if (e.key === 'Enter') {
-      handleSearchData(searchTitle);
+      handleSearchData({
+        query: searchTitle,
+      });
     }
   };
 
@@ -61,8 +68,13 @@ export default function SearchBooksComponent({
 
   const handleHistoryClick = (searchValue: string) => {
     setSearchTitle(searchValue);
-    handleSearchData(searchValue);
+    handleSearchData({ query: searchValue });
     setFocus(false);
+  };
+
+  // 상세검색 버튼
+  const handleDetailSearch = () => {
+    setShowDetailSearch(!showDetailSearch);
   };
 
   useEffect(() => {
@@ -107,16 +119,24 @@ export default function SearchBooksComponent({
                 <SearchHistoryComponent
                   searchHistory={searchHistory}
                   onHistoryClick={handleHistoryClick}
-                  onDeleteHistory={handleDeleteHistory}
+                  onDeleteHistory={onDeleteHistory}
                 />
               </div>
             )}
           </div>
-          <Button variant="outline" size="sm" className="m-2">
+          <Button
+            variant="outline"
+            size="sm"
+            className="m-2"
+            onClick={handleDetailSearch}
+          >
             상세검색
           </Button>
         </div>
       </div>
+      {showDetailSearch && (
+        <DetailSearchBooksComponent onSearchData={handleSearchData} />
+      )}
     </>
   );
 }

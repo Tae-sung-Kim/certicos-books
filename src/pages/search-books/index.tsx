@@ -4,18 +4,23 @@ import TotalCountBooksComponent from './components/TotalCount-books.component';
 import { useSearchBooks } from '@/queries/search-books.query';
 import BooksListComponent from './components/Books-list.component';
 import Paginations from '@/components/paginations';
+import { SearchBookReq } from '@/types/serach-books.type';
 
 export default function SearchBookPage() {
-  const [query, setQuery] = useState<string>('');
+  const [search, setSearch] = useState<SearchBookReq>({
+    query: '',
+  });
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { documents, meta } = useSearchBooks({
-    query: query,
-    page: currentPage,
-  });
+  const { documents, meta } = useSearchBooks({ ...search });
 
-  const handleSearchData = (query: string) => {
-    setQuery(query);
+  const handleSearchData = ({ query, sort, page, size }: SearchBookReq) => {
+    setSearch({
+      query,
+      sort,
+      page,
+      size,
+    });
     setCurrentPage(1);
   };
 
@@ -34,7 +39,7 @@ export default function SearchBookPage() {
         <Paginations
           totalCount={meta.pageable_count}
           currentPage={currentPage}
-          pageSize={22}
+          pageSize={10}
           onPage={(page) => setCurrentPage(page)}
         />
       )}

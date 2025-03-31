@@ -22,7 +22,10 @@ export default function SearchHistoryComponent({
             <span className="text-sm">{d}</span>
             <RiDeleteBin6Line
               className="cursor-pointer hover:text-gray-500 ml-2"
-              onClick={() => onDeleteHistory({ value: d })}
+              onClick={(e) => {
+                e.stopPropagation();
+                return onDeleteHistory({ value: d });
+              }}
             />
           </li>
         ))}
