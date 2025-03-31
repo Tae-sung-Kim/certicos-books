@@ -24,7 +24,7 @@ export type SearchBookRes = {
 export type DetailSearchBookReq = {
   query: string;
   title?: string;
-  author?: string;
+  person?: number;
   publisher?: string;
   isbn?: string;
 };

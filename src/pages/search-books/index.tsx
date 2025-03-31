@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SearchBooksComponent from './components/Search-books.component';
 import TotalCountBooksComponent from './components/TotalCount-books.component';
 import { useSearchBooks } from '@/queries/search-books.query';
@@ -28,8 +28,14 @@ export default function SearchBookPage() {
       size,
       target,
     });
+
     setCurrentPage(1);
   };
+
+  // 페이지 변경시
+  useEffect(() => {
+    setSearch((prevData) => ({ ...prevData, page: currentPage }));
+  }, [currentPage]);
 
   return (
     <div className="container">

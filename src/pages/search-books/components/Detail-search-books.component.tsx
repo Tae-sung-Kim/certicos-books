@@ -40,7 +40,9 @@ export default function DetailSearchBooksComponent({
             </SelectTrigger>
             <SelectContent>
               {DETAIL_SEARCH_BOOKS_SELECT.map((d) => (
-                <SelectItem value={d.value}>{d.label}</SelectItem>
+                <SelectItem key={d.value} value={d.value}>
+                  {d.label}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>

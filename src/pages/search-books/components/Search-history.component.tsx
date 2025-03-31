@@ -21,6 +21,7 @@ export default function SearchHistoryComponent({
           >
             <span className="text-sm">{d}</span>
             <RiDeleteBin6Line
+              size={18}
               className="cursor-pointer hover:text-gray-500 ml-2"
               onClick={(e) => {
                 e.stopPropagation();

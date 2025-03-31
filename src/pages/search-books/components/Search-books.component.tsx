@@ -57,7 +57,7 @@ export default function SearchBooksComponent({
 
   // 엔터 조회
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (!searchTitle) return;
+    if (!searchTitle || searchTitle.trim() === '') return;
 
     if (e.key === 'Enter') {
       handleSearchData({
@@ -73,15 +73,24 @@ export default function SearchBooksComponent({
   };
 
   const handleHistoryClick = (searchValue: string) => {
+    if (!searchValue || searchValue.trim() === '') return;
+
     setSearchTitle(searchValue);
     handleSearchData({ query: searchValue });
     setFocus(false);
   };
 
-  // 상세검색 버튼
-  const handleDetailSearch = () => {
+  // 상세검색 활성화
+  const handleDetailSearchShow = () => {
     setFocus(false);
     setShowDetailSearch(!showDetailSearch);
+    setSearchTitle('');
+  };
+
+  // 상세 검색
+  const handleDetailSearch = (search: SearchBookReq) => {
+    onSearchData(search);
+    setShowDetailSearch(false);
   };
 
   useEffect(() => {
@@ -136,12 +145,12 @@ export default function SearchBooksComponent({
               variant="outline"
               size="sm"
               className="m-2"
-              onClick={handleDetailSearch}
+              onClick={handleDetailSearchShow}
             >
               상세검색
             </Button>
             {showDetailSearch && (
-              <DetailSearchBooksComponent onSearchData={onSearchData} />
+              <DetailSearchBooksComponent onSearchData={handleDetailSearch} />
             )}
           </div>
         </div>
