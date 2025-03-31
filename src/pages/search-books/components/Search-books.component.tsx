@@ -40,6 +40,15 @@ export default function SearchBooksComponent({
     size,
     target,
   }: SearchBookReq) => {
+    // 빈값일 경우는 history에 추가하지 않음
+    if (
+      !query ||
+      query.trim() === '' ||
+      !searchTitle ||
+      searchTitle.trim() === ''
+    )
+      return;
+
     onSearchData({ query, sort, page, size, target });
 
     // 중복 검색 기록 삭제
@@ -57,8 +66,6 @@ export default function SearchBooksComponent({
 
   // 엔터 조회
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (!searchTitle || searchTitle.trim() === '') return;
-
     if (e.key === 'Enter') {
       handleSearchData({
         query: searchTitle,
@@ -73,8 +80,6 @@ export default function SearchBooksComponent({
   };
 
   const handleHistoryClick = (searchValue: string) => {
-    if (!searchValue || searchValue.trim() === '') return;
-
     setSearchTitle(searchValue);
     handleSearchData({ query: searchValue });
     setFocus(false);
@@ -150,7 +155,10 @@ export default function SearchBooksComponent({
               상세검색
             </Button>
             {showDetailSearch && (
-              <DetailSearchBooksComponent onSearchData={handleDetailSearch} />
+              <DetailSearchBooksComponent
+                onSearchData={handleDetailSearch}
+                onClose={handleDetailSearchShow}
+              />
             )}
           </div>
         </div>
