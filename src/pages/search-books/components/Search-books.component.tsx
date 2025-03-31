@@ -45,7 +45,6 @@ export default function SearchBooksComponent({
       onDeleteHistory({ value: searchTitle });
     }
 
-    console.log(searchTitle);
     setSearchHistory([searchTitle, ...updatedHistory]);
     setFocus(false);
   };
