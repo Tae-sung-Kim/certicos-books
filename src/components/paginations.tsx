@@ -18,13 +18,9 @@ export default function Paginations({
   pageSize?: number;
   onPage: (page: number) => void;
 }) {
-  console.log(totalCount, currentPage, onPage);
-
   const totalPages = Math.ceil(totalCount / pageSize);
   const startPage = Math.floor((currentPage - 1) / pageSize) * pageSize + 1;
   const endPage = Math.min(startPage + 9, totalPages);
-
-  console.log(totalPages, startPage, endPage);
 
   const handlePage = (page: number) => {
     onPage(page);
@@ -55,7 +51,9 @@ export default function Paginations({
           </PaginationItem>
         ))}
         <PaginationItem>
-          <PaginationNext onClick={() => handlePage(startPage + pageSize)} />
+          <PaginationNext
+            onClick={() => handlePage(Math.min(endPage + pageSize, totalPages))}
+          />
         </PaginationItem>
       </PaginationContent>
     </Pagination>

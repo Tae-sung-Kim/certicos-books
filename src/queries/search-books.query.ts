@@ -18,8 +18,6 @@ export function useSearchBooks({ query, sort, page, size }: SearchBookReq) {
     url: '',
   };
 
-  console.log('쿼리가 안 실리는데? ', query, page);
-
   const { data = fullback } = useQuery({
     queryKey: ['search', query, sort, page, size],
     queryFn: () => searchBooks({ query, sort, page, size }),
