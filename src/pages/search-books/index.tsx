@@ -34,6 +34,7 @@ export default function SearchBookPage() {
         <Paginations
           totalCount={meta.pageable_count}
           currentPage={currentPage}
+          pageSize={22}
           onPage={(page) => setCurrentPage(page)}
         />
       )}

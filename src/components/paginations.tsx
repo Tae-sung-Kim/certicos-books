@@ -1,7 +1,6 @@
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -11,16 +10,23 @@ import {
 export default function Paginations({
   totalCount,
   currentPage,
+  pageSize = 10,
   onPage,
 }: {
   totalCount: number;
   currentPage: number;
+  pageSize?: number;
   onPage: (page: number) => void;
 }) {
   console.log(totalCount, currentPage, onPage);
 
+  const totalPages = Math.ceil(totalCount / pageSize);
+  const startPage = Math.floor((currentPage - 1) / pageSize) * pageSize + 1;
+  const endPage = Math.min(startPage + 9, totalPages);
+
+  console.log(totalPages, startPage, endPage);
+
   const handlePage = (page: number) => {
-    console.log(page);
     onPage(page);
   };
 
@@ -28,24 +34,28 @@ export default function Paginations({
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious />
+          <PaginationPrevious
+            onClick={() => handlePage(Math.max(startPage - pageSize, 1))}
+          />
         </PaginationItem>
+        {Array.from(
+          { length: endPage - startPage + 1 },
+          (_, i) => startPage + i
+        ).map((page) => (
+          <PaginationItem key={page}>
+            <PaginationLink
+              onClick={(e) => {
+                e.preventDefault();
+                handlePage(page);
+              }}
+              isActive={page === currentPage}
+            >
+              {page}
+            </PaginationLink>
+          </PaginationItem>
+        ))}
         <PaginationItem>
-          <PaginationLink onClick={() => handlePage(1)}>1</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink onClick={() => handlePage(2)} isActive>
-            2
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink onClick={() => handlePage(3)}>3</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationEllipsis />
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationNext />
+          <PaginationNext onClick={() => handlePage(startPage + pageSize)} />
         </PaginationItem>
       </PaginationContent>
     </Pagination>

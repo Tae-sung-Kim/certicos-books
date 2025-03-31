@@ -16,28 +16,16 @@ export default function BooksDetailComponent({
         <div className="flex-1">
           <p className="text-gray-700 mb-4">{book.contents}</p>
           <div className="space-y-2">
-            <p className="text-sm text-gray-600">
-              <span className="font-semibold">출간일:</span>{' '}
-              {new Date(book.datetime).toLocaleDateString()}
-            </p>
-            <p className="text-sm text-gray-600">
-              <span className="font-semibold">저자:</span>{' '}
-              {book.authors.join(', ')}
-            </p>
+            <InfoItem
+              label="출간일"
+              value={new Date(book.datetime).toLocaleDateString()}
+            />
+            <InfoItem label="저자" value={book.authors.join(', ')} />
             {book.translators.length > 0 && (
-              <p className="text-sm text-gray-600">
-                <span className="font-semibold">번역:</span>{' '}
-                {book.translators.join(', ')}
-              </p>
+              <InfoItem label="번역" value={book.translators.join(', ')} />
             )}
-
-            <p className="text-sm text-gray-600">
-              <span className="font-semibold">출판사:</span> {book.publisher}
-            </p>
-            <p className="text-sm text-gray-600">
-              <span className="font-semibold">교재 상태:</span> {book.status}
-            </p>
-
+            <InfoItem label="출판사" value={book.publisher} />
+            <InfoItem label="교재 상태" value={book.status} />
             <div className="flex items-center space-x-2">
               {book.sale_price ? (
                 <>
@@ -60,3 +48,19 @@ export default function BooksDetailComponent({
     </div>
   );
 }
+
+export const InfoItem = ({
+  className,
+  label,
+  value,
+}: {
+  className?: string;
+  label: string;
+  value: string;
+}) => {
+  return (
+    <p className={`text-sm text-gray-600 ${className}`}>
+      <span className="font-semibold">{label}:</span> {value}
+    </p>
+  );
+};

@@ -29,7 +29,6 @@ export default function SearchBooksComponent({
   };
 
   // 조회 함수
-
   const handleSearchData = (searchTitle: string) => {
     onSearchData(searchTitle);
 
