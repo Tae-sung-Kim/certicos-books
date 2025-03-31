@@ -15,11 +15,13 @@ export default function BooksDetailComponent({
       <div className="flex space-x-4">
         <img
           className="w-32 h-48 object-cover rounded"
-          src={book.thumbnail}
+          src={book.thumbnail || '/empty-book.png'}
           alt={book.title}
         />
         <div className="flex-1">
-          <p className="text-gray-700 mb-4">{decodeHtml(book.contents)}</p>
+          <p className="text-gray-700 mb-4 leading-7">
+            {decodeHtml(book.contents)}
+          </p>
           <div className="space-y-2">
             <InfoItem
               label="출간일"

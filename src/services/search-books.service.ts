@@ -8,12 +8,14 @@ export const searchBooks = async ({
   sort,
   page,
   size,
+  target,
 }: SearchBookReq) => {
   const params = qs.stringify({
     query,
     sort,
     page,
     size,
+    target,
   });
 
   const response = await apiInstance.get(`?${params}`);

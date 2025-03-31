@@ -10,7 +10,7 @@ import { SearchBookReq } from '@/types/serach-books.type';
 export default function SearchBooksComponent({
   onSearchData,
 }: {
-  onSearchData: ({ query, sort, page, size }: SearchBookReq) => void;
+  onSearchData: ({ query, sort, page, size, target }: SearchBookReq) => void;
 }) {
   const [searchHistory, setSearchHistory, onDeleteHistory] = useLocalStorage<
     string[]
@@ -33,8 +33,14 @@ export default function SearchBooksComponent({
   };
 
   // 조회 함수 - 전체 조회
-  const handleSearchData = ({ query, sort, page, size }: SearchBookReq) => {
-    onSearchData({ query, sort, page, size });
+  const handleSearchData = ({
+    query,
+    sort,
+    page,
+    size,
+    target,
+  }: SearchBookReq) => {
+    onSearchData({ query, sort, page, size, target });
 
     // 중복 검색 기록 삭제
     const updatedHistory = searchHistory.filter((item) => item !== searchTitle);
@@ -63,6 +69,7 @@ export default function SearchBooksComponent({
   // 포커스가 들어왔을때
   const handleFocus = () => {
     setFocus(true);
+    setShowDetailSearch(false);
   };
 
   const handleHistoryClick = (searchValue: string) => {
@@ -73,6 +80,7 @@ export default function SearchBooksComponent({
 
   // 상세검색 버튼
   const handleDetailSearch = () => {
+    setFocus(false);
     setShowDetailSearch(!showDetailSearch);
   };
 
@@ -123,19 +131,21 @@ export default function SearchBooksComponent({
               </div>
             )}
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            className="m-2"
-            onClick={handleDetailSearch}
-          >
-            상세검색
-          </Button>
+          <div className="relative">
+            <Button
+              variant="outline"
+              size="sm"
+              className="m-2"
+              onClick={handleDetailSearch}
+            >
+              상세검색
+            </Button>
+            {showDetailSearch && (
+              <DetailSearchBooksComponent onSearchData={onSearchData} />
+            )}
+          </div>
         </div>
       </div>
-      {showDetailSearch && (
-        <DetailSearchBooksComponent onSearchData={handleSearchData} />
-      )}
     </>
   );
 }

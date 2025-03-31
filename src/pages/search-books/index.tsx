@@ -14,12 +14,19 @@ export default function SearchBookPage() {
 
   const { documents, meta } = useSearchBooks({ ...search });
 
-  const handleSearchData = ({ query, sort, page, size }: SearchBookReq) => {
+  const handleSearchData = ({
+    query,
+    sort,
+    page,
+    size,
+    target,
+  }: SearchBookReq) => {
     setSearch({
       query,
       sort,
       page,
       size,
+      target,
     });
     setCurrentPage(1);
   };

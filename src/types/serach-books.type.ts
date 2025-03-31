@@ -3,6 +3,7 @@ export type SearchBookReq = {
   sort?: string;
   page?: number;
   size?: number;
+  target?: string;
 };
 
 export type SearchBookRes = {
@@ -18,4 +19,12 @@ export type SearchBookRes = {
   title: string;
   translators: string[];
   url: string;
+};
+
+export type DetailSearchBookReq = {
+  query: string;
+  title?: string;
+  author?: string;
+  publisher?: string;
+  isbn?: string;
 };
