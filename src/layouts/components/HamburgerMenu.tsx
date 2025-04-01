@@ -6,7 +6,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 import { GiHamburgerMenu } from 'react-icons/gi';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu } from '@/types/menu.type';
 
@@ -15,6 +15,8 @@ type MenuProps = {
 };
 
 export default function HamburgerMenu({ menuData }: MenuProps) {
+  const location = useLocation();
+
   return (
     <div className="md:hidden">
       <DropdownMenu>
@@ -25,9 +27,16 @@ export default function HamburgerMenu({ menuData }: MenuProps) {
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           {menuData.map((d) => {
+            const isActive = location.pathname === d.path;
             return (
               <Link key={d.id} to={d.path}>
-                <DropdownMenuItem>{d.name}</DropdownMenuItem>
+                <DropdownMenuItem
+                  className={`cursor-pointer ${
+                    isActive ? 'bg-blue-100 text-blue-700 font-semibold' : ''
+                  }`}
+                >
+                  {d.name}
+                </DropdownMenuItem>
               </Link>
             );
           })}

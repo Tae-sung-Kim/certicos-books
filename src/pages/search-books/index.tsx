@@ -10,7 +10,7 @@ import { useSearchStore } from '@/stores/search-books.stores';
 export default function SearchBookPage() {
   const { search, setSearch } = useSearchStore();
   const [currentPage, setCurrentPage] = useState(search.page ?? 1);
-  const [pageSize, setPageSize] = useState<string>('10');
+  const [pageSize, setPageSize] = useState<string>(String(search.size ?? 10));
 
   const { documents, meta } = useSearchBooks({ ...search });
 
