@@ -134,6 +134,7 @@ export default function SearchBooksComponent({
             {searchHistory.length > 0 && focus && (
               <div className="absolute left-0 right-0 top-[100%] z-10 mt-1 bg-white shadow-lg rounded-lg">
                 <SearchHistoryComponent
+                  searchTitle={searchTitle}
                   searchHistory={searchHistory}
                   onHistoryClick={handleHistoryClick}
                   onDeleteHistory={onDeleteHistory}

@@ -1,11 +1,14 @@
 import { Button } from '@/components/ui/button';
 import { RiDeleteBin6Line } from 'react-icons/ri';
+import HistoryHighLightText from './History-high-light-text.component';
 
 export default function SearchHistoryComponent({
+  searchTitle,
   searchHistory,
   onHistoryClick,
   onDeleteHistory,
 }: {
+  searchTitle: string;
   searchHistory: string[];
   onHistoryClick: (searchValue: string) => void;
   onDeleteHistory: (options?: { key?: string; value?: string }) => void;
@@ -19,7 +22,9 @@ export default function SearchHistoryComponent({
             className="flex items-center justify-between px-4 py-2 hover:bg-gray-50"
             onClick={() => onHistoryClick(d)}
           >
-            <span className="text-sm">{d}</span>
+            <span className="text-sm">
+              {<HistoryHighLightText text={d} query={searchTitle} />}
+            </span>
             <RiDeleteBin6Line
               size={18}
               className="cursor-pointer hover:text-gray-500 ml-2"
