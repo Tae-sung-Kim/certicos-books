@@ -6,16 +6,18 @@ import { FaSearch, FaTimes } from 'react-icons/fa';
 import SearchHistoryComponent from './Search-history.component';
 import DetailSearchBooksComponent from './Detail-search-books.component';
 import { SearchBookReq } from '@/types/serach-books.type';
+import { useSearchStore } from '@/stores/search-books.stores';
 
 export default function SearchBooksComponent({
   onSearchData,
 }: {
   onSearchData: ({ query, sort, page, size, target }: SearchBookReq) => void;
 }) {
+  const { search } = useSearchStore();
   const [searchHistory, setSearchHistory, onDeleteHistory] = useLocalStorage<
     string[]
   >('searchHistory', []);
-  const [searchTitle, setSearchTitle] = useState<string>('');
+  const [searchTitle, setSearchTitle] = useState<string>(search.query ?? '');
   const [focus, setFocus] = useState<boolean>(false);
   const [showDetailSearch, setShowDetailSearch] = useState<boolean>(false);
 

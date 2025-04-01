@@ -1,16 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import SearchBooksComponent from './components/Search-books.component';
 import TotalCountBooksComponent from '../components/TotalCount-books.component';
 import { useSearchBooks } from '@/queries/search-books.query';
 import BooksListComponent from '../components/Books-list.component';
 import Paginations from '@/components/paginations';
 import { SearchBookReq } from '@/types/serach-books.type';
+import { useSearchStore } from '@/stores/search-books.stores';
 
 export default function SearchBookPage() {
-  const [search, setSearch] = useState<SearchBookReq>({
-    query: '',
-  });
-  const [currentPage, setCurrentPage] = useState(1);
+  const { search, setSearch } = useSearchStore();
+  const [currentPage, setCurrentPage] = useState(search.page ?? 1);
   const [pageSize, setPageSize] = useState<string>('10');
 
   const { documents, meta } = useSearchBooks({ ...search });
@@ -33,19 +32,21 @@ export default function SearchBookPage() {
     setCurrentPage(1);
   };
 
-  const handlePage = (pageSize: string) => {
-    setCurrentPage(1);
+  const handlePageSize = (pageSize: string) => {
     setPageSize(pageSize);
+    setSearch({
+      ...search,
+      size: Number(pageSize),
+    });
   };
 
-  // 페이지 변경시
-  useEffect(() => {
-    setSearch((prevData) => ({
-      ...prevData,
-      page: currentPage,
-      size: Number(pageSize),
-    }));
-  }, [currentPage, pageSize]);
+  const handlePage = (page: number) => {
+    setCurrentPage(page);
+    setSearch({
+      ...search,
+      page,
+    });
+  };
 
   return (
     <div className="container">
@@ -68,8 +69,8 @@ export default function SearchBookPage() {
           totalCount={meta.pageable_count}
           currentPage={currentPage}
           pageSize={Number(pageSize)}
-          onPage={(page) => setCurrentPage(page)}
-          onPageSize={(pageSize) => handlePage(pageSize)}
+          onPage={(page) => handlePage(page)}
+          onPageSize={(pageSize) => handlePageSize(pageSize)}
         />
       )}
     </div>
