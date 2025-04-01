@@ -41,26 +41,20 @@ export default function SearchBooksComponent({
     target,
   }: SearchBookReq) => {
     // 빈값일 경우는 history에 추가하지 않음
-    if (
-      !query ||
-      query.trim() === '' ||
-      !searchTitle ||
-      searchTitle.trim() === ''
-    )
-      return;
+    if (!query || query.trim() === '') return;
 
     onSearchData({ query, sort, page, size, target });
 
     // 중복 검색 기록 삭제
-    const updatedHistory = searchHistory.filter((item) => item !== searchTitle);
+    const updatedHistory = searchHistory.filter((item) => item !== query);
 
     if (updatedHistory.length >= 8) {
       updatedHistory.pop(); // 가장 오래된 기록 삭제
       //특정 값 삭제
-      onDeleteHistory({ value: searchTitle });
+      onDeleteHistory({ value: query });
     }
 
-    setSearchHistory([searchTitle, ...updatedHistory]);
+    setSearchHistory([query, ...updatedHistory]);
     setFocus(false);
   };
 
