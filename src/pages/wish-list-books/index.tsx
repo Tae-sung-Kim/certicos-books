@@ -4,11 +4,12 @@ import TotalCountBooksComponent from '../components/TotalCount-books.component';
 import { getAllItems } from '@/utils/indexedDB';
 import { SearchBookRes } from '@/types/serach-books.type';
 import Paginations from '@/components/paginations';
+import { useWishListStore } from '@/stores/wish-books.store';
 
 export default function WishListBookPage() {
   const [bookList, setBookList] = useState<SearchBookRes[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState<string>('10');
+  const { currentPage, pageSize, setCurrentPage, setPageSize } =
+    useWishListStore();
 
   useEffect(() => {
     (async () => {
