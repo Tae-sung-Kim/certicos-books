@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import SearchBooksComponent from './components/Search-books.component';
-import TotalCountBooksComponent from './components/TotalCount-books.component';
+import TotalCountBooksComponent from '../components/TotalCount-books.component';
 import { useSearchBooks } from '@/queries/search-books.query';
 import BooksListComponent from '../components/Books-list.component';
 import Paginations from '@/components/paginations';

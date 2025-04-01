@@ -10,7 +10,8 @@ export default function TotalCountBooksComponent({
   return (
     <div className="m-4">
       <div className="text-sm font-bold">
-        {title} <span className="text-blue-500">{`${count}`}</span>건
+        {title}{' '}
+        <span className="text-blue-500">{`${count.toLocaleString()}`}</span>건
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import BooksListComponent from '../components/Books-list.component';
-import TotalCountBooksComponent from '../search-books/components/TotalCount-books.component';
+import TotalCountBooksComponent from '../components/TotalCount-books.component';
 import { getAllItems } from '@/utils/indexedDB';
 import { SearchBookRes } from '@/types/serach-books.type';
 import Paginations from '@/components/paginations';
