@@ -24,11 +24,11 @@ export function useSearchBooks({
     url: '',
   };
 
-  const { data = fullback } = useQuery({
+  const { data = fullback, isFetching } = useQuery({
     queryKey: ['search', query, sort, page, size, target],
     queryFn: () => searchBooks({ query, sort, page, size, target }),
     enabled: !!query,
   });
 
-  return data;
+  return { ...data, isFetching };
 }

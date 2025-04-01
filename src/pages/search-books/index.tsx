@@ -6,13 +6,14 @@ import BooksListComponent from '../components/Books-list.component';
 import Paginations from '@/components/paginations';
 import { SearchBookReq } from '@/types/serach-books.type';
 import { useSearchStore } from '@/stores/search-books.stores';
+import { BooksListSkeleton } from '../components/Books-list-skeleton.component';
 
 export default function SearchBookPage() {
   const { search, setSearch } = useSearchStore();
   const [currentPage, setCurrentPage] = useState(search.page ?? 1);
   const [pageSize, setPageSize] = useState<string>(String(search.size ?? 10));
 
-  const { documents, meta } = useSearchBooks({ ...search });
+  const { documents, meta, isFetching } = useSearchBooks({ ...search });
 
   const handleSearchData = ({
     query,
@@ -57,12 +58,15 @@ export default function SearchBookPage() {
         title="도서 검색 결과 총"
         count={meta?.pageable_count ?? 0}
       />
-      {/* 조회 책 목록 */}
 
-      <BooksListComponent
-        bookList={documents}
-        noDataText="검색된 결과가 없습니다."
-      />
+      {isFetching ? (
+        <BooksListSkeleton dataLength={Number(documents?.length ?? 0)} />
+      ) : (
+        <BooksListComponent
+          bookList={documents}
+          noDataText="검색된 결과가 없습니다."
+        />
+      )}
 
       {meta && meta.pageable_count > 0 && (
         <Paginations
