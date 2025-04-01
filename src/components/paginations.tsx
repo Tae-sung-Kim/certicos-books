@@ -7,6 +7,8 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination';
 
+import { IoChevronForwardSharp, IoChevronBackSharp } from 'react-icons/io5';
+
 export default function Paginations({
   totalCount,
   currentPage,
@@ -27,13 +29,21 @@ export default function Paginations({
   };
 
   return (
-    <Pagination className="my-8 p-2 rounded-lg shadow cursor-pointer">
-      <PaginationContent className="gap-1">
+    <Pagination className="my-8 p-2 rounded-lg shadow cursor-pointer overflow-hidden">
+      <PaginationContent className="flex flex-wrap justify-center gap-1 overflow-x-auto py-1 max-w-full">
         <PaginationItem>
           <PaginationPrevious
             onClick={() => handlePage(Math.max(startPage - pageSize, 1))}
             className="hover:bg-blue-50 hover:text-blue-600 transition-colors"
           />
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink
+            onClick={() => handlePage(Math.max(currentPage - 1, 1))}
+            className="hover:bg-blue-50 hover:text-blue-600 transition-colors min-w-8 h-8 text-sm sm:min-w-9 sm:h-9 md:min-w-10 md:h-10 md:text-base flex items-center justify-center"
+          >
+            <IoChevronBackSharp />
+          </PaginationLink>
         </PaginationItem>
         {Array.from(
           { length: endPage - startPage + 1 },
@@ -46,7 +56,7 @@ export default function Paginations({
                 handlePage(page);
               }}
               isActive={page === currentPage}
-              className={`min-w-[2.5rem] h-10 ${
+              className={`w-8 h-8 text-sm sm:w-9 sm:h-9 md:w-10 md:h-10 md:text-base flex items-center justify-center ${
                 page === currentPage
                   ? 'bg-blue-600 text-white hover:bg-blue-700'
                   : 'hover:bg-blue-50 hover:text-blue-600'
@@ -56,6 +66,14 @@ export default function Paginations({
             </PaginationLink>
           </PaginationItem>
         ))}
+        <PaginationItem>
+          <PaginationLink
+            onClick={() => handlePage(Math.min(currentPage + 1, totalPages))}
+            className="hover:bg-blue-50 hover:text-blue-600 transition-colors min-w-8 h-8 text-sm sm:min-w-9 sm:h-9 md:min-w-10 md:h-10 md:text-base flex items-center justify-center"
+          >
+            <IoChevronForwardSharp />
+          </PaginationLink>
+        </PaginationItem>
         <PaginationItem>
           <PaginationNext
             onClick={() =>
