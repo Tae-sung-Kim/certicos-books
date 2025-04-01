@@ -11,6 +11,7 @@ export default function SearchBookPage() {
     query: '',
   });
   const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState<string>('10');
 
   const { documents, meta } = useSearchBooks({ ...search });
 
@@ -32,10 +33,18 @@ export default function SearchBookPage() {
     setCurrentPage(1);
   };
 
+  const handlePage = (pageSize: string) => {
+    setPageSize(pageSize);
+  };
+
   // 페이지 변경시
   useEffect(() => {
-    setSearch((prevData) => ({ ...prevData, page: currentPage }));
-  }, [currentPage]);
+    setSearch((prevData) => ({
+      ...prevData,
+      page: currentPage,
+      size: Number(pageSize),
+    }));
+  }, [currentPage, pageSize]);
 
   return (
     <div className="container">
@@ -52,8 +61,9 @@ export default function SearchBookPage() {
         <Paginations
           totalCount={meta.pageable_count}
           currentPage={currentPage}
-          pageSize={10}
+          pageSize={Number(pageSize)}
           onPage={(page) => setCurrentPage(page)}
+          onPageSize={(pageSize) => handlePage(pageSize)}
         />
       )}
     </div>
