@@ -1,5 +1,5 @@
 import { SearchBookRes } from '@/types/serach-books.type';
-import BooksWishComponent from './Books-wish.component';
+import BooksWishComponent from '../search-books/components/Books-wish.component';
 
 export default function BooksDetailComponent({
   book,

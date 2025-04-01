@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import SearchBooksComponent from './components/Search-books.component';
 import TotalCountBooksComponent from './components/TotalCount-books.component';
 import { useSearchBooks } from '@/queries/search-books.query';
-import BooksListComponent from './components/Books-list.component';
+import BooksListComponent from '../components/Books-list.component';
 import Paginations from '@/components/paginations';
 import { SearchBookReq } from '@/types/serach-books.type';
 
@@ -34,6 +34,7 @@ export default function SearchBookPage() {
   };
 
   const handlePage = (pageSize: string) => {
+    setCurrentPage(1);
     setPageSize(pageSize);
   };
 
@@ -56,7 +57,12 @@ export default function SearchBookPage() {
         count={meta?.pageable_count ?? 0}
       />
       {/* 조회 책 목록 */}
-      <BooksListComponent bookList={documents} />
+
+      <BooksListComponent
+        bookList={documents}
+        noDataText="검색된 결과가 없습니다."
+      />
+
       {meta && meta.pageable_count > 0 && (
         <Paginations
           totalCount={meta.pageable_count}

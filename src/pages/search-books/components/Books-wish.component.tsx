@@ -7,14 +7,6 @@ import { addItem, removeItem, getItem } from '@/utils/indexedDB';
 export default function BooksWishComponent({ book }: { book: SearchBookRes }) {
   const [isWished, setIsWished] = useState(false);
 
-  useEffect(() => {
-    const checkWishStatus = async () => {
-      const status = await getItem('BooksWishDB', 'wishList', book.isbn);
-      setIsWished(!!status);
-    };
-    checkWishStatus();
-  }, [book.isbn]);
-
   const handleBookWish = async (e: React.MouseEvent) => {
     e.stopPropagation();
 
@@ -25,6 +17,14 @@ export default function BooksWishComponent({ book }: { book: SearchBookRes }) {
     }
     setIsWished(!isWished);
   };
+
+  useEffect(() => {
+    const checkWishStatus = async () => {
+      const status = await getItem('BooksWishDB', 'wishList', book.isbn);
+      setIsWished(!!status);
+    };
+    checkWishStatus();
+  }, [book.isbn]);
 
   return (
     <Button

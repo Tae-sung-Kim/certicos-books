@@ -6,8 +6,10 @@ import BooksDetailComponent from './Books-detail.component';
 
 export default function BooksListComponent({
   bookList,
+  noDataText = '검색된 결과가 없습니다.',
 }: {
   bookList: SearchBookRes[];
+  noDataText?: string;
 }) {
   const [selectedBook, setSelectedBook] = useState<string | null>(null);
 
@@ -69,7 +71,7 @@ export default function BooksListComponent({
           ))}
         </div>
       ) : (
-        <NoData text="검색된 결과가 없습니다." />
+        <NoData text={noDataText} />
       )}
     </div>
   );
