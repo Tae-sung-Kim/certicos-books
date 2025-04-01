@@ -11,6 +11,7 @@ export default function BooksListComponent({
 }) {
   const [selectedBook, setSelectedBook] = useState<string | null>(null);
 
+  // 상세보기
   const handleBookClick = (isbn: string) => {
     setSelectedBook(selectedBook === isbn ? null : isbn);
   };

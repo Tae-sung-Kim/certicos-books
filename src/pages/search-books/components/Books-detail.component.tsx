@@ -1,4 +1,5 @@
 import { SearchBookRes } from '@/types/serach-books.type';
+import BooksWishComponent from './Books-wish.component';
 
 export default function BooksDetailComponent({
   book,
@@ -18,6 +19,7 @@ export default function BooksDetailComponent({
           src={book.thumbnail || '/empty-book.png'}
           alt={book.title}
         />
+        <BooksWishComponent book={book} />
         <div className="flex-1">
           <p className="text-gray-700 mb-4 leading-7">
             {decodeHtml(book.contents)}

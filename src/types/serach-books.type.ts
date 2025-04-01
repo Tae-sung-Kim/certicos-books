@@ -19,6 +19,7 @@ export type SearchBookRes = {
   title: string;
   translators: string[];
   url: string;
+  id?: string;
 };
 
 export type DetailSearchBookReq = {
