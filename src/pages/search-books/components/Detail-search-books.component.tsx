@@ -62,6 +62,11 @@ export default function DetailSearchBooksComponent({
           className="w-full"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              handleSearchData();
+            }
+          }}
         />
       </div>
       <div className="p-4 pt-0">
