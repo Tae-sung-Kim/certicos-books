@@ -97,6 +97,11 @@ certicos-books/
   - 필요한 라이브러리만 다운로드해서 사용
   - tailwindcss와 잘 어울림
 
+## 배포
+
+이 프로젝트는 Netlify를 통해 배포되었습니다. 최신 버전은 아래 URL에서 확인할 수 있습니다:
+https://certicos-books.netlify.app
+
 ## 강조하고 싶은 기능
 
 ### 1. 상세 검색 기능
